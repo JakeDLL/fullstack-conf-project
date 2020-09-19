@@ -52,10 +52,9 @@ window.addEventListener('load', () => {
     const checkboxes = document.querySelectorAll('.activities input');
     const activities = document.querySelector('.activities');
     let totalCost = 0;
-    const costParagraph = `<p id="total">Total: ${totalCost}</p>`;
+    const costParagraph = `<p id="total" hidden="true">Total: </p>`;
     activities.insertAdjacentHTML('beforeend', costParagraph);
     const total = document.querySelector('#total');
-    total.style.display = 'none';
     
     activities.addEventListener('change', event => {
         const selectedBox = event.target;
@@ -63,14 +62,14 @@ window.addEventListener('load', () => {
         const selectedCost = selectedBox.getAttribute('data-cost');
 
         if (selectedBox.checked) {
-            totalCost += selectedCost;
+            totalCost += +selectedCost;
             for (let i = 0; i < checkboxes.length; i++) {
-                if (selectedDNT === checkboxes[i].getAttribute('data-day-and-time')) {
+                if (selectedBox !== checkboxes[i] && selectedDNT === checkboxes[i].getAttribute('data-day-and-time')) {
                     checkboxes[i].disabled = 'true';
                 }
             }
         } else {
-            totalCost -= selectedCost;
+            totalCost -= +selectedCost;
             for (let i = 0; i < checkboxes.length; i++) {
                 if (selectedDNT === checkboxes[i].getAttribute('data-day-and-time')) {
                     checkboxes[i].disabled = '';
@@ -79,10 +78,41 @@ window.addEventListener('load', () => {
         }
         
         if (totalCost !== 0) {
-            total.style.display = '';
+            total.hidden = '';
+            total.textContent = `Total: $${totalCost}`;
         } else {
-            total.style.display = 'none';
+            total.hidden = 'true';
         }
         
-    })
+    });
+
+    const creditCardDiv = document.querySelector('#credit-card');
+    const paypalDiv = document.querySelector('#paypal');
+    paypalDiv.hidden = 'true';
+    const bitcoinDiv = document.querySelector('#bitcoin');
+    bitcoinDiv.hidden = 'true';
+    const paymentList = document.querySelector('#payment')
+    const paymentListOptions = paymentList.children;
+    paymentListOptions[0].hidden = 'true';
+    paymentListOptions[1].selected = 'true';
+
+    paymentList.addEventListener('change', event => {
+        const selectedPayment = event.target.value;
+
+        if (selectedPayment === 'credit card') {
+            creditCardDiv.hidden = '';
+            paypalDiv.hidden = 'true';
+            bitcoinDiv.hidden = 'true';
+        }
+        if (selectedPayment === 'paypal') {
+            paypalDiv.hidden = '';
+            creditCardDiv.hidden = 'true';
+            bitcoinDiv.hidden = 'true';
+        }
+        if (selectedPayment === 'bitcoin') {
+            bitcoinDiv.hidden = '';
+            creditCardDiv.hidden = 'true';
+            paypalDiv.hidden = 'true';
+        }
+    });
 });
