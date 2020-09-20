@@ -9,10 +9,10 @@ window.addEventListener('load', () => {
     jobList.addEventListener('change', event => {
         const chosenJob = event.target.value;
         if (chosenJob === 'other') {
-            otherJobRole.hidden = '';
+            otherJobRole.style.display = '';
             otherJobRole.focus();
         } else {
-            otherJobRole.hidden = 'true';
+            otherJobRole.style.display = 'none';
         }
     })
 
