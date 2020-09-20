@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const userName = document.querySelector('#name');
     userName.focus();
 
