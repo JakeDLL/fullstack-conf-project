@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     shirtDesign.addEventListener('change', event => {
         colors[0].selected = 'true'
         const selection = event.target.value;
-        // This repeats. Create a function for it.
+        // This repeats. Create a function for it.0
         if (selection === "js puns") {
             const testRegex = /JS Puns/;
             for (let i = 1; i < colors.length; i++){
@@ -114,5 +114,23 @@ document.addEventListener('DOMContentLoaded', () => {
             creditCardDiv.hidden = 'true';
             paypalDiv.hidden = 'true';
         }
+    });
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', event => {
+        if (!(userName.length > 0)) {
+            event.preventDefault();
+        }
+        const emailRegEx = /^([\w\.\_\-]+)@([\w\.\_\-]+)\.\w+$/
+        const userEmail = document.querySelector('#mail');
+        if (!(emailRegEx.test(userEmail.value))) {
+            event.preventDefault();
+            userEmail.style.borderColor = 'red';
+            const emailErrMsg = `
+                <p class="error">Sorry, this needs to be in email format: email@example.com</p>
+            `
+            userEmail.insertAdjacentHTML("afterend", emailErrMsg);
+        }
+
     });
 });

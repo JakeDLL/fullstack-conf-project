@@ -179,6 +179,9 @@ option {
   display: table;
   clear: both;
 }
+.error {
+	color: 'red';
+}
 
 /* ================================= 
   Media Queries
