@@ -52,14 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkboxes = document.querySelectorAll('.activities input');
     const activities = document.querySelector('.activities');
     let totalCost = 0;
-    const costParagraph = `<p id="total" hidden="true">Total: </p>`;
-    activities.insertAdjacentHTML('beforeend', costParagraph);
-    const total = document.querySelector('#total');
-    
+    const totalMsg = `<p id="total" hidden="true"></p>`;
+    activities.insertAdjacentHTML('beforeend', totalMsg);
+
     activities.addEventListener('change', event => {
         const selectedBox = event.target;
         const selectedDNT = selectedBox.getAttribute('data-day-and-time');
         const selectedCost = selectedBox.getAttribute('data-cost');
+        const total = document.querySelector('#total');
 
         if (selectedBox.checked) {
             totalCost += +selectedCost;
@@ -116,21 +116,104 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const form = document.querySelector('form');
-    form.addEventListener('submit', event => {
-        if (!(userName.length > 0)) {
-            event.preventDefault();
+    const activitiesValidator = () => {
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                console.log(`${checkboxes[i].value} is checked`);
+                return true;
+            }
         }
-        const emailRegEx = /^([\w\.\_\-]+)@([\w\.\_\-]+)\.\w+$/
-        const userEmail = document.querySelector('#mail');
-        if (!(emailRegEx.test(userEmail.value))) {
-            event.preventDefault();
-            userEmail.style.borderColor = 'red';
-            const emailErrMsg = `
-                <p class="error">Sorry, this needs to be in email format: email@example.com</p>
-            `
-            userEmail.insertAdjacentHTML("afterend", emailErrMsg);
+        return false;
+    };
+
+    const creditCardValidator = () => {
+        const cardNumValidator = () => {
+            const cardNumRegex = /^[\s\-]?(\d{4})[\s\-]?(\d{4})[\s\-]?(\d{4})[\s\-]?\d{1,4}\s*$/;
+            const cardNum = document.querySelector('#cc-num');
+
+            if (cardNumRegex.test(cardNum.value)) {
+                cardNum.style.borderColor = '';
+            } else {
+                cardNum.style.borderColor = 'red';
+                return false;
+            }
         }
 
+        const zipCodeValidator = () => {
+            const zipCodeRegex = /^(\d{5})[\s\-]?(\d{4})?$/;
+            const zipCode = document.querySelector('#zip');
+            
+            if (zipCodeRegex.test(zipCode.value)) {
+                zipCode.style.borderColor = '';
+            } else  {
+                zipCode.style.borderColor = 'red';
+                return false;
+            }
+        }
+
+        const cvvValidator = () => {
+            const cvvRegex = /^\d{3}$/;
+            const cvv = document.querySelector('#cvv');
+
+            if (cvvRegex.test(cvv.value)) {
+                cvv.style.borderColor = '';
+            } else {
+                cvv.style.borderColor = 'red'
+                return false;
+            }
+        }
+
+        const isCardValid = cardNumValidator();
+        const isZipValid = zipCodeValidator();
+        const isCVVValid = cvvValidator();
+
+        if (isCardValid && isZipValid && isCVVValid) {
+            return true;
+        }
+        return false;
+    };
+
+    const nameValidator = () => {
+        const nameValue = userName.value; 
+        if (nameValue.length == 0) {
+            userName.style.borderColor = 'red';
+            return false;
+        } else {
+            userName.style.borderColor = 'white';
+            return true;
+        }
+    };
+
+    const mailValidator = () => {
+        const userMail = document.querySelector('#mail');
+        const mailRegex = /^([\w\-\_\.]+)@([\w\-\_\.]+)\.\w+$/;
+
+        if (mailRegex.test(userMail.value)) {
+            userMail.style.borderColor = '';
+            return true;
+        } else {
+            userMail.style.borderColor = 'red';
+            return false;
+        }
+    };
+
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', event => {
+        if (!(nameValidator())) {
+            event.preventDefault();
+        }
+        if (!(mailValidator())) {
+            event.preventDefault();
+        }
+        if (!(activitiesValidator())) {
+            event.preventDefault();
+        }
+        if (paymentListOptions[1].selected) {
+            if (!(creditCardValidator())) {
+                event.preventDefault();
+            }
+        }
+        
     });
 });
