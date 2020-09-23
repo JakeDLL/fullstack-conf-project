@@ -127,6 +127,11 @@ option {
 	font-family: 'roboto', sans-serif;
 }
 
+.error-msg + * {
+	margin-top: 25px;
+}
+
+
 /* ================================= 
   Page Styles
 ==================================== */
@@ -178,6 +183,15 @@ option {
   content: " ";
   display: table;
   clear: both;
+}
+
+.error-msg {
+	font-weight: bold;
+	font-size: 0.75em;
+	padding: 3px;
+	border-left: solid 3px #ff2b00;
+	border-radius: 7px;
+	background-color: #ededed;
 }
 
 /* ================================= 
