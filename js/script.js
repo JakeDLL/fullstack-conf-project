@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const mailValidator = () => {
-        const mailRegex = /^([\w\-\_\.]+)@([\w\-\_\.]+)\.\w+$/;
+        const mailRegex = /^([\w\-\_\.]+)@([\w\-\_\.]+)\.\w{3,}$/;
         return validator(mailRegex, userMail, `You need to input a valid email format (example@mail.me).`);
     };
 
