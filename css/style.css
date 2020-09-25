@@ -11,13 +11,15 @@
 body,
 input,
 button {
-	font-family: 'Nunito', sans-serif;
+	font-family: "Gill Sans", sans-serif;
 }
 
 body {
   font: 1em/1.5;
-  color: rgba(6, 49, 68, 0.9);
-	background: #CDE0FB;
+  color: rgba(0, 0, 0, 0.9);
+	background-image: url("../img/colored-smoke.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 header {
@@ -40,7 +42,7 @@ a {
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9BBEEF;
+	background: #f6f6f6;
 	border: 2px solid rgba(8, 63, 87, 0.6);
 	border-radius: 3px;
 }
@@ -109,7 +111,7 @@ input[type="radio"] {
 button {
 	color: #fff;
 	padding: .55em 1.25em;
-	background: #083f57;
+	background: #f8ad3d;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
 	border: 2px solid black;
